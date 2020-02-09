@@ -1,9 +1,12 @@
-import React, { useState } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { Card, Form, Input, Button, Icon, Typography } from 'antd'
+import { Card, Form, Button, Typography } from 'antd'
 import { useDispatch } from 'react-redux'
+import { useFormik } from 'formik'
 import { signup } from '../actions/auth/signup'
+import FormInput from './FormInput'
+import { SignupSchema } from './schemas/auth'
 
 const FormCard = styled(Card)`
   @media only screen and (max-width: 600px) {
@@ -39,105 +42,69 @@ const SignupTitle = styled(Typography.Title)`
 `
 const Item = styled(Form.Item)`
   margin: 5px;
-  padding: 0px;
 `
-
 const SignupForm = props => {
-  const [isSubmittingForm, setSubmittingForm] = useState(false)
-  const { getFieldDecorator, validateFields } = props.form
-  console.log(props.form)
   const dispatch = useDispatch()
-  const handleSubmit = e => {
-    e.preventDefault()
-    validateFields(async (error, values) => {
-      if (!error) {
-        await dispatch(signup(values))
-      }
-      setSubmittingForm(false)
-    })
-  }
+  const formik = useFormik({
+    initialValues: {
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: ''
+    },
+    onSubmit: values => dispatch(signup(values)),
+    validationSchema: SignupSchema
+  })
   return (
     <FormCard>
-      <Form onSubmit={handleSubmit}>
+      <Form onSubmit={formik.handleSubmit}>
         <SignupTitle level={4}>Signup</SignupTitle>
-        <Item>
-          {getFieldDecorator('firstName', {
-            rules: [
-              {
-                type: 'string',
-                message: 'Not a valid name!'
-              },
-              {
-                required: true,
-                message: 'First Name Required! (e.g. "John")'
-              }
-            ]
-          })(
-            <Input
-              prefix={<Icon type='user' style={{ color: 'rgba(0,0,0,.25)' }} />}
-              placeholder='First Name'
-            />
-          )}
-        </Item>
-        <Item>
-          {getFieldDecorator('lastName', {
-            rules: [
-              {
-                type: 'string',
-                message: 'Not a valid name!'
-              },
-              {
-                required: true,
-                message: 'Last Name Required! (e.g. "Doe")'
-              }
-            ]
-          })(
-            <Input
-              prefix={<Icon type='user' style={{ color: 'rgba(0,0,0,.25)' }} />}
-              placeholder='Last Name'
-            />
-          )}
-        </Item>
-        <Item>
-          {getFieldDecorator('email', {
-            rules: [
-              {
-                type: 'email',
-                message: 'Not a valid Email! (e.g. name@email.com)'
-              },
-              {
-                required: true,
-                message: 'Email Required!'
-              }
-            ]
-          })(
-            <Input
-              prefix={<Icon type='mail' style={{ color: 'rgba(0,0,0,.25)' }} />}
-              placeholder='Email'
-            />
-          )}
-        </Item>
-        <Item hasFeedback>
-          {getFieldDecorator('password', {
-            rules: [
-              {
-                required: true,
-                message: 'Password Required!'
-              }
-            ]
-          })(
-            <Input.Password
-              prefix={<Icon type='lock' style={{ color: 'rgba(0,0,0,.25)' }} />}
-              placeholder='Password'
-            />
-          )}
-        </Item>
+        <FormInput
+          name='firstName'
+          placeholder='First Name'
+          icon='user'
+          errors={formik.errors.firstName}
+          value={formik.values.firstName}
+          isSubmitting={formik.isSubmitting}
+          type='text'
+          {...formik.getFieldProps('firstName')}
+        />
+        <FormInput
+          name='lastName'
+          placeholder='Lase Name'
+          icon='user'
+          errors={formik.errors.lastName}
+          value={formik.values.lastName}
+          isSubmitting={formik.isSubmitting}
+          type='text'
+          {...formik.getFieldProps('lastName')}
+        />
+        <FormInput
+          name='emailName'
+          placeholder='Email'
+          icon='mail'
+          errors={formik.errors.email}
+          value={formik.values.email}
+          isSubmitting={formik.isSubmitting}
+          type='email'
+          {...formik.getFieldProps('email')}
+        />
+        <FormInput
+          name='password'
+          placeholder='Password'
+          icon='lock'
+          errors={formik.errors.password}
+          value={formik.values.password}
+          isSubmitting={formik.isSubmitting}
+          type='password'
+          {...formik.getFieldProps('password')}
+        />
         <Item>
           <SignupButton
             type='primary'
             htmlType='submit'
-            loading={isSubmittingForm}
-            onClick={() => setSubmittingForm(true)}>
+            loading={formik.isSubmitting}
+            disabled={formik.isSubmitting}>
             Signup
           </SignupButton>
         </Item>
@@ -150,4 +117,4 @@ SignupForm.propTypes = {
   form: PropTypes.object.isRequired
 }
 
-export default Form.create({ name: 'login' })(SignupForm)
+export default Form.create({ name: 'signup' })(SignupForm)
