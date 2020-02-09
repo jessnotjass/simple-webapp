@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { Card, Form, Input, Button, Icon, Typography } from 'antd'
@@ -43,7 +43,9 @@ const Item = styled(Form.Item)`
 `
 
 const SignupForm = props => {
+  const [isSubmittingForm, setSubmittingForm] = useState(false)
   const { getFieldDecorator, validateFields } = props.form
+  console.log(props.form)
   const dispatch = useDispatch()
   const handleSubmit = e => {
     e.preventDefault()
@@ -51,6 +53,7 @@ const SignupForm = props => {
       if (!error) {
         await dispatch(signup(values))
       }
+      setSubmittingForm(false)
     })
   }
   return (
@@ -130,7 +133,11 @@ const SignupForm = props => {
           )}
         </Item>
         <Item>
-          <SignupButton type='primary' htmlType='submit'>
+          <SignupButton
+            type='primary'
+            htmlType='submit'
+            loading={isSubmittingForm}
+            onClick={() => setSubmittingForm(true)}>
             Signup
           </SignupButton>
         </Item>
