@@ -3129,6 +3129,11 @@ for-in@^1.0.2:
   resolved "https://registry.yarnpkg.com/for-in/-/for-in-1.0.2.tgz#81068d295a8142ec0ac726c6e2200c30fb6d5e80"
   integrity sha1-gQaNKVqBQuwKxybG4iAMMPttXoA=
 
+formik-antd@^1.8.0:
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/formik-antd/-/formik-antd-1.8.0.tgz#85987dc97a9cb70c4f8e67eedc8ee1b29aa3c45b"
+  integrity sha512-rIRXLCvQiOL682f9TbMc3a7gZupb0QKRWJKmj1Mz6se6l2m1cbMeFeymrjdMciFMcLUlQ5+22t+KdbzjqQzp2A==
+
 formik@^2.1.4:
   version "2.1.4"
   resolved "https://registry.yarnpkg.com/formik/-/formik-2.1.4.tgz#8deef07ec845ea98f75e03da4aad7aab4ac46570"
