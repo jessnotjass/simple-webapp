@@ -24,7 +24,7 @@ const FormCard = styled(Card)`
   @media only screen and (min-width: 1200px) {
     width: 30%
   }
-  height: 40%;
+  min-height: 40%;
   padding: 0;
   position: absolute;
   top: 50%;
