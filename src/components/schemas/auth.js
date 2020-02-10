@@ -2,14 +2,17 @@ import * as Yup from 'yup'
 
 export const SignupSchema = Yup.object().shape({
   firstName: Yup.string()
-    .min(2, 'Too Short!')
-    .max(70, 'Too Long!')
     .required('Required!'),
   lastName: Yup.string()
-    .min(2, 'Too Short!')
-    .max(70, 'Too Long!')
     .required('Required!'),
   email: Yup.string()
-    .email('Invalid email')
+    .email('Invalid email!')
+    .required('Required!'),
+  password: Yup.string()
+    .min(6, 'Must be atleast 6 characters!')
+    .matches(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$&*])$/,
+      'Must contain a lowercase letter, uppercase letter, number & a one of the following symbols !@#$&*'
+    )
     .required('Required!')
 })
