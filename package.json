@@ -42,6 +42,7 @@
     "@babel/runtime": "^7.8.4",
     "@reduxjs/toolkit": "^1.2.3",
     "antd": "^3.26.8",
+    "dotenv-webpack": "^1.7.0",
     "firebase": "^7.8.1",
     "formik": "^2.1.4",
     "prop-types": "^15.7.2",
