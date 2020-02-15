@@ -12,10 +12,11 @@ export const login = ({
     try {
       await auth.signInWithEmailAndPassword(email, password)
       const user = auth.currentUser
-      const userData = await firestore
+      const userRef = await firestore
         .collection('users')
         .doc(user.uid)
-        .get({})
+        .get()
+      const userData = userRef.data()
       const storePayload = {
         ...userData,
         email: user.email
